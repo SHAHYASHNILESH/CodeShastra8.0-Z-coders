@@ -2,6 +2,7 @@ import this
 import tkinter as tk
 from tkinter import *
 from tkinter import messagebox
+from turtle import onclick
 from PIL import ImageTk, Image
 
 app = Tk()
@@ -16,9 +17,8 @@ app.title('Sleep Tracker')
 app.geometry('616x411')
 
 # dashBoard = StringVar()
-# dashBoardLabel = Label(app,text='DASHBOARD',font = ('bold 14 underline'),bg="yellow")
-# dashBoardLabel.grid(row=0,column=0,pady="30")
-# # dashBoard.config(bg="yellow")
+# dashBoardLabel = Label(app,text='DASHBOARD',font = ('bold 14 underline'))
+
 
 # def onClick():
 
@@ -31,7 +31,7 @@ app.geometry('616x411')
 
 
 # dictionary of colors:
-color = {"nero": "#FFFFFF", "orange": "purple", "darkorange": "#FE6101"}
+color = {"nero": "#FFFFFF", "purple": "purple", "darkorange": "#FE6101"}
 
 # setting app window:
 # app = tk.Tk()
@@ -46,6 +46,9 @@ btnState = False
 navIcon = PhotoImage(file="GUI/Menu.png")
 closeIcon = PhotoImage(file="GUI/close.png")
 
+  
+
+        
 # setting switch function:
 def switch():
     global btnState
@@ -57,8 +60,8 @@ def switch():
 
         # resetting widget colors:
      #    brandLabel.config(bg="gray17", fg="green")
-        homeLabel.config(bg=color["orange"])
-        topFrame.config(bg=color["orange"])
+        homeLabel.config(bg=color["purple"])
+        topFrame.config(bg=color["purple"])
         app.config(bg="white")
 
         # turning button OFF:
@@ -79,11 +82,11 @@ def switch():
         btnState = True
 
 # top Navigation bar:
-topFrame = tk.Frame(app, bg=color["orange"])
+topFrame = tk.Frame(app, bg=color["purple"])
 topFrame.pack(side="top", fill=tk.X)
 
 # Header label text:
-homeLabel = tk.Label(topFrame, text="Sleep Tracker", font="Bahnschrift 15", bg=color["orange"], height=2, padx=20)
+homeLabel = tk.Label(topFrame, text="Sleep Tracker", font="Bahnschrift 15", bg=color["purple"], height=2, padx=20)
 homeLabel.pack(side="right")
 
 # Main label text:
@@ -91,26 +94,44 @@ homeLabel.pack(side="right")
 # brandLabel.place(x=100, y=250)
 
 # Navbar button:
-navbarBtn = tk.Button(topFrame, image=navIcon, bg=color["orange"], activebackground=color["orange"], bd=0, padx=20, command=switch)
+navbarBtn = tk.Button(topFrame, image=navIcon, bg=color["purple"], activebackground=color["purple"], bd=0, padx=20, command=switch)
 navbarBtn.place(x=10, y=10)
 
 # setting Navbar frame:
 navapp = tk.Frame(app, bg="white", height=1000, width=200)
 navapp.place(x=-300, y=0)
-tk.Label(navapp, font="Bahnschrift 15", bg=color["orange"], fg="white", height=2, width=300, padx=20).place(x=0, y=0)
+tk.Label(navapp, font="Bahnschrift 15", bg=color["purple"], fg="white", height=2, width=300, padx=20).place(x=0, y=0)
 
 # set y-coordinate of Navbar widgets:
 y = 80
-# option in the navbar:
-options = ["Dashboard", "Settings", "Help", "About", "Feedback"]
 
-# Navbar Option Buttons:
-for i in range(5):
-    tk.Button(navapp, text=options[i], font="BahnschriftLight 15", bg="white", fg=color["orange"], activeforeground="green", bd=0).place(x=25, y=y)
-    y += 40
+def db_click():
+    # messagebox.showinfo("Dashboard Popup")
+    switch()
+    dashBoardLabel = Label(app,text='DASHBOARD',bg="white",font = ('bold 15 underline')).place(x=240,y=60)
+
+
+def SA_click():
+    messagebox.showinfo("Sleep Analytics Popup")
+def Track_click():
+    from ..Tracker import  sleep_tracker
+    switch()
+    trackBtn = tk.Button(app,text="Start Tracking", font="BahnschriftLight 15",fg='black',bg="purple",bd=0,activebackground="green",activeforeground="white").place(x=240, y=280)
+    # dashBoardLabel.destroy()
+
+
+ActivityBtn = tk.Button(navapp,text = "Dashboard", font="BahnschriftLight 15 underline", bg="white", fg=color["purple"], activeforeground="green", bd=0,command = db_click).place(x=25, y=y)
+y += 60
+ActivityBtn = tk.Button(navapp,text = "Sleep Analytics", font="BahnschriftLight 15 underline", bg="white", fg=color["purple"], activeforeground="green", bd=0,command = Track_click).place(x=25, y=y)
+y += 60
+ActivityBtn = tk.Button(navapp,text = "Tracking", font="BahnschriftLight 15 underline", bg="white", fg=color["purple"], activeforeground="green", bd=0,command = Track_click).place(x=25, y=y)
+y += 60
+# ActivityBtn = tk.Button(navapp,text = "Tracking", font="BahnschriftLight 15 underline", bg="white", fg=color["purple"], activeforeground="green", bd=0,command = db_click).place(x=25, y=y)
+# y += 60
+
 
 # Navbar Close Button:
-closeBtn = tk.Button(navapp,image=closeIcon, bg=color["orange"], activebackground=color["orange"], bd=0, command=switch)
+closeBtn = tk.Button(navapp,image=closeIcon, bg=color["purple"], activebackground=color["purple"], bd=0, command=switch)
 closeBtn.place(x=150, y=10)
 
 # window in mainloop:
