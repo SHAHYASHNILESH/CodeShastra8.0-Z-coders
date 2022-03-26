@@ -75,13 +75,28 @@ while cap.isOpened():
 
     temp=((z-1)*temp+t)/z
     # print(z)
-    xy=np.array(getPos(mp_pose.PoseLandmark.RIGHT_SHOULDER))-np.array(getPos(mp_pose.PoseLandmark.LEFT_SHOULDER))
-    print(np.hypot(xy[0],xy[1]))
+    def getDist(name1,name2):
+        print(len(np.hypot(np.array(getPos(name1))-np.array(getPos(name2)))))
+        return np.hypot(np.array(getPos(name1))-np.array(getPos(name2)))
+    # print(np.hypot(xy[0],xy[1]),nx>slx,nx>srx,srx>slx)
     z+=1
+    text='front'
+    if slx>srx:
+        if nx> slx and nx>srx:
+            text="right Side"
+        elif nx<=slx and nx<=srx:
+            text="left Side"
+
+
+    else:
+        text='back'
+    print(text)
+
+
 
     cv2.imshow('MediaPipe Pose', cv2.flip(image, 1))
     cv2.imshow('MediaPipe img', cv2.flip(t, 1))
     cv2.imshow('MediaPipe temp', cv2.flip(np.array(temp,dtype=np.uint8), 1))
-    if cv2.waitKey(25) & 0xFF == 27:
+    if cv2.waitKey(100) & 0xFF == 27:
       break
 cap.release()
