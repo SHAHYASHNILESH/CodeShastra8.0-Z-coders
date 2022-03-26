@@ -1,10 +1,8 @@
-import this
 import tkinter as tk
 from tkinter import *
 from tkinter import messagebox
-from turtle import onclick
-from PIL import ImageTk, Image
-
+import sys
+sys.path.append("")
 app = Tk()
 
 #	enter widgets here
@@ -114,7 +112,7 @@ def db_click():
 def SA_click():
     messagebox.showinfo("Sleep Analytics Popup")
 def Track_click():
-    from ..Tracker import  sleep_tracker
+    import sleep_tracker
     switch()
     trackBtn = tk.Button(app,text="Start Tracking", font="BahnschriftLight 15",fg='black',bg="purple",bd=0,activebackground="green",activeforeground="white").place(x=240, y=280)
     # dashBoardLabel.destroy()
