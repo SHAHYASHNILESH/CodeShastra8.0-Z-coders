@@ -112,8 +112,9 @@ def db_click():
 def SA_click():
     messagebox.showinfo("Sleep Analytics Popup")
 def Track_click():
-    import sleep_tracker
+    # import sleep_tracker
     switch()
+    print(app.place_slaves())
     trackBtn = tk.Button(app,text="Start Tracking", font="BahnschriftLight 15",fg='black',bg="purple",bd=0,activebackground="green",activeforeground="white").place(x=240, y=280)
     # dashBoardLabel.destroy()
 

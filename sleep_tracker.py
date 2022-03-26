@@ -1,12 +1,13 @@
 import cv2.cv2 as cv2
 import mediapipe
 import numpy as np
-
+import pandas as pd
+import time
 mp_pose=mediapipe.solutions.pose
 mp_drawing=mediapipe.solutions.drawing_utils
 mp_drawing_styles=mediapipe.solutions.drawing_styles
 mp_drawing_specs=mp_drawing.DrawingSpec(thickness=10,circle_radius=1,color=(255,255,255))
-
+logs=pd.DataFrame(index=['Time','Position'])
 cap = cv2.VideoCapture('./test.mp4')
 temp=None
 z=0
@@ -92,6 +93,7 @@ while cap.isOpened():
         text='back'
     print(text)
 
+    logs=logs.append({'Time':time.time(),'Position':text},ignore_index=True)
 
 
     cv2.imshow('MediaPipe Pose', cv2.flip(image, 1))
@@ -99,4 +101,6 @@ while cap.isOpened():
     cv2.imshow('MediaPipe temp', cv2.flip(np.array(temp,dtype=np.uint8), 1))
     if cv2.waitKey(100) & 0xFF == 27:
       break
+# print(logs)
+logs.to_csv('logs.csv')
 cap.release()
