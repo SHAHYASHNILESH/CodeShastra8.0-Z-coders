@@ -101,27 +101,27 @@ tk.Label(navapp, font="Bahnschrift 15", bg=color["purple"], fg="white", height=2
 # set y-coordinate of Navbar widgets:
 y = 80
 ################################################################
-# def db_click():
-#     global img
-#     # messagebox.showinfo("Dashboard Popup")
-#     removeAllTemporary(app)
-#     switch()
-#     dashBoardLabel = Label(app,text='DASHBOARD',bg="white",font = ('bold 15 underline')).place(x=240,y=60)
-#     lv.append(dashBoardLabel)
-#     init_figure = create_figure()
-#     canvas = FigureCanvasTkAgg(init_figure, master=app)
-#     canvas.draw()
-#     canvas.get_tk_widget().place(x=100,y=150)
-#     from PIL import Image,ImageTk
-#     img=cv2.imread('./temp.png')
-#     scale_percent = 40  # percent of original size
-#     width = int(img.shape[1] * scale_percent / 100)
-#     height = int(img.shape[0] * scale_percent / 100)
-#     dim = (width, height)
-#     resized = cv2.resize(img, dim, interpolation=cv2.INTER_AREA)
-#     img = ImageTk.PhotoImage(image=Image.fromarray(resized))
-#     label=tk.Label(app,image=img)
-#     label.place(x=300,y=150)
+def db_click():
+    global img
+    # messagebox.showinfo("Dashboard Popup")
+    removeAllTemporary(app)
+    switch()
+    dashBoardLabel = Label(app,text='DASHBOARD',bg="white",font = ('bold 15 underline')).place(x=240,y=60)
+    lv.append(dashBoardLabel)
+    init_figure = create_figure()
+    canvas = FigureCanvasTkAgg(init_figure, master=app)
+    canvas.draw()
+    canvas.get_tk_widget().place(x=100,y=150)
+    from PIL import Image,ImageTk
+    img=cv2.imread('./temp.png')
+    scale_percent = 40  # percent of original size
+    width = int(img.shape[1] * scale_percent / 100)
+    height = int(img.shape[0] * scale_percent / 100)
+    dim = (width, height)
+    resized = cv2.resize(img, dim, interpolation=cv2.INTER_AREA)
+    img = ImageTk.PhotoImage(image=Image.fromarray(resized))
+    label=tk.Label(app,image=img)
+    label.place(x=300,y=150)
 # ##############################################
 def create_figure() -> Figure:
     # generate some data
