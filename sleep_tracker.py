@@ -106,5 +106,7 @@ def start_tracking():
     # print(logs)
     logs.to_csv('logs.csv')
     print(np.mean(temp.flatten()>0))
+    cv2.imwrite('./temp.png',temp)
     cap.release()
-start_tracking()
+if __name__=='__main__':
+    start_tracking()
