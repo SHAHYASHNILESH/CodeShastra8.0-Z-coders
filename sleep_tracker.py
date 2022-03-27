@@ -10,6 +10,7 @@ mp_drawing_specs=mp_drawing.DrawingSpec(thickness=10,circle_radius=1,color=(255,
 logs=pd.DataFrame(index=['Time','Position'])
 def start_tracking():
     global  logs
+
     cap = cv2.VideoCapture('./test.mp4')
     temp=None
     z=0
@@ -102,10 +103,27 @@ def start_tracking():
         cv2.imshow('MediaPipe img', cv2.flip(t, 1))
         cv2.imshow('MediaPipe temp', cv2.flip(np.array(temp,dtype=np.uint8), 1))
         if cv2.waitKey(100) & 0xFF == 27:
-          break
+
+            break
     # print(logs)
+    logs.dropna(inplace=True)
+
+    logs.reset_index(drop=True,inplace=True)
+    import os
+    if os.path.exists("Daily_logs.csv"):
+        df = pd.read_csv('Daily_logs.csv')
+    else:
+        df = pd.DataFrame(index=['Date', 'Time of Sleep', 'Quality'])
+    import datetime
+
+    t=logs['Time'][len(logs)-1]-logs['Time'][0]
+    print(t)
+
+    df=df.append({"Date":datetime.date.today(),"Time of Sleep" :t,'Quality':np.mean(temp.flatten()>0)*3/2*100},ignore_index=True)
+    df.to_csv('Daily_logs.csv',index=False)
     logs.to_csv('logs.csv')
     print(np.mean(temp.flatten()>0))
+
     cv2.imwrite('./temp.png',temp)
     cap.release()
 if __name__=='__main__':

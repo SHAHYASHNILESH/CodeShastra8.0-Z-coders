@@ -1,7 +1,7 @@
 import tkinter as tk
 from tkinter import *
 from tkinter import messagebox
-import time
+
 import cv2
 import pandas as pd
 import seaborn as sns
@@ -190,7 +190,6 @@ def SA_click():
     treev.heading("2", text ="Time of Sleep")
     treev.heading("3", text ="Perfect sleep(%)")
 
-minutes=0
 def Track_click():
     removeAllTemporary(app)
     # import sleep_tracker
@@ -200,17 +199,13 @@ def Track_click():
     att = tk.Frame(app,bg='white',highlightbackground= "red",highlightcolor= "red",highlightthickness=2,height=300,width=350).place(x=200,y=80)
     playListLabel = tk.Label(att, text = "Sleep Playlist",bg='white',font = 'bold 14 underline').place(x=220,y=100)
     playListLabel = tk.Label(att, text = "Set Alarm",bg='white',font = 'bold 14 underline').place(x=220,y=220)
-    SleepCount = tk.Label(att, text = "",bg='white',font = 'bold 14 underline').place(x=220,y=270)
     def off():
         toggle_photo.configure(file='off.png')
         toggle_button.configure(command=on)
-        # minutes=(time.time()-minutes)/60
-        # SleepCount.configure(text=str(minutes))
         # onoff.configure(text='Off')
     def on():
         toggle_photo.configure(file='on.png')
         toggle_button.configure(command=off)
-        # minutes=time.time()
         # onoff.configure(text='On')
 
 
