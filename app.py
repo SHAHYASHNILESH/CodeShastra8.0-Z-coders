@@ -1,5 +1,6 @@
 import tkinter as tk
 from tkinter import *
+from tkinter import ttk
 from tkinter import messagebox
 
 import cv2
@@ -191,7 +192,9 @@ def SA_click():
     treev.heading("3", text ="Perfect sleep(%)")
 
 def Track_click():
+    switch()
     removeAllTemporary(app)
+
     # import sleep_tracker
     trackBtn = tk.Button(app,text="Start Tracking", font="BahnschriftLight 15",fg='black',bg="#663399",bd=0,activebackground="green",activeforeground="white").place(x=20, y=120)
     # dashBoardLabel.destroy()
