@@ -1,6 +1,7 @@
 import tkinter as tk
 from tkinter import *
 from tkinter import messagebox
+from tkinter import ttk
 
 import cv2
 import pandas as pd
@@ -87,8 +88,8 @@ homeLabel.pack(side="right")
 
 #Menu Click
 def menuClick():
-    switch()
     removeAllTemporary(app)
+    switch()
 # Navbar button:
 navbarBtn = tk.Button(topFrame, image=navIcon, bg=color["#663399"], activebackground=color["#663399"], bd=0, padx=20, command=menuClick)
 navbarBtn.place(x=10, y=10)
@@ -106,7 +107,7 @@ def db_click():
     # messagebox.showinfo("Dashboard Popup")
     removeAllTemporary(app)
     switch()
-    dashBoardLabel = Label(app,text='DASHBOARD',bg="white",font = ('bold 15 underline')).place(x=240,y=60)
+    dashBoardLabel = Label(app,text="Today's Activity",bg="white",font = ('bold 15 underline')).place(x=240,y=60)
     lv.append(dashBoardLabel)
     init_figure = create_figure()
     canvas = FigureCanvasTkAgg(init_figure, master=app)
@@ -152,7 +153,7 @@ def create_figure() -> Figure:
     canvas.get_tk_widget().place(x=50,y=50)
 
 def SA_click():
-
+    
     # messagebox.showinfo("Sleep Analytics Popup")
     switch()
     removeAllTemporary(app)
@@ -190,7 +191,8 @@ def SA_click():
     treev.heading("2", text ="Time of Sleep")
     treev.heading("3", text ="Perfect sleep(%)")
 
-def Track_click():
+def Track_click():       
+    switch()
     removeAllTemporary(app)
     # import sleep_tracker
     trackBtn = tk.Button(app,text="Start Tracking", font="BahnschriftLight 15",fg='black',bg="#663399",bd=0,activebackground="green",activeforeground="white").place(x=20, y=120)
@@ -222,8 +224,6 @@ def Track_click():
     Drop_box.place(x=350,y=100)
     clicked.set("Music1")
 
-    def hideWidgets():
-        hourBox.place_forget()()
 
     def sound_track():
         global cur_song
@@ -252,16 +252,10 @@ def Track_click():
     minBox.place(x=350, y=250)
 
     trackBtn = tk.Button(app, text="Start Tracking", font="BahnschriftLight 15", fg='black', bg="#663399", bd=0, activebackground="green", activeforeground="white",command=sound_track).place(x=20, y=120)
-    StopBtn = tk.Button(app, text="Stop Tracking", font="BahnschriftLight 15", fg='black', bg="#663399", bd=0,
-                         activebackground="green", activeforeground="white",command=hideWidgets).place(x=20, y=180)
+    StopBtn = tk.Button(app, text="Stop Tracking", font="BahnschriftLight 15", fg='black', bg="#663399", bd=0,activebackground="green", activeforeground="white").place(x=20, y=180)
 
-
-   
-
-                   
-  
     
-DashboardBtn = tk.Button(navapp,text = "Dashboard", font="BahnschriftLight 15 underline", bg="white", fg=color["#663399"], activeforeground="green", bd=0,command = db_click).place(x=25, y=y)
+DashboardBtn = tk.Button(navapp,text = "Today's Activity", font="BahnschriftLight 15 underline", bg="white", fg=color["#663399"], activeforeground="green", bd=0,command = db_click).place(x=25, y=y)
 y += 60
 ActivityBtn = tk.Button(navapp,text = "Sleep Analytics", font="BahnschriftLight 15 underline", bg="white", fg=color["#663399"], activeforeground="green", bd=0,command = SA_click).place(x=25, y=y)
 y += 60
