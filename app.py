@@ -2,6 +2,7 @@ import tkinter as tk
 from tkinter import *
 from tkinter import messagebox
 import sys
+import pygame
 sys.path.append("")
 app = Tk()
 
@@ -102,12 +103,12 @@ def db_click():
 
 def SA_click():
     messagebox.showinfo("Sleep Analytics Popup")
+
 def Track_click():
     removeAllTemporary(app)
     # import sleep_tracker
     switch()
-    trackBtn = tk.Button(app,text="Start Tracking", font="BahnschriftLight 15",fg='black',bg="purple",bd=0,activebackground="green",activeforeground="white").place(x=20, y=120)
-    # dashBoardLabel.destroy()
+   # dashBoardLabel.destroy()
     att = tk.Frame(app,bg='white',highlightbackground= "red",highlightcolor= "red",highlightthickness=2,height=300,width=350).place(x=200,y=80)
     playListLabel = tk.Label(att, text = "Sleep Playlist",bg='white',font = 'bold 14 underline').place(x=220,y=100)
     playListLabel = tk.Label(att, text = "Set Alarm",bg='white',font = 'bold 14 underline').place(x=220,y=220)
@@ -120,18 +121,52 @@ def Track_click():
         toggle_button.configure(command=off)
         # onoff.configure(text='On')
 
+
     toggle_photo = PhotoImage(file='on.png')
     toggle_button = Button(att,image=toggle_photo,border=0,command=off)
-    toggle_button.place(x=300,y=260)
+    toggle_button.place(x=450,y=260)
+
+    pygame.mixer.init()
+    options = ['Music1', 'Music2', 'Music3','None']
+    options_path = ['./GUI/Calm-and-Peaceful.mp3',
+                    './GUI/alex-productions-ambient-music-nature.mp3',
+                    './GUI/Sunset-Landscape.mp3','']
+    clicked = StringVar()
+    Drop_box = OptionMenu(att, clicked, *options)
+    Drop_box.place(x=350,y=100)
+    clicked.set("Music1")
 
 
-   
+    def sound_track():
+        global cur_song
+        if clicked.get() == "Music1":
+            cur_song = 0
+            pygame.mixer.music.load(options_path[cur_song])
+            pygame.mixer.music.play()
+        if clicked.get() == "Music2":
+            cur_song = 1
+            pygame.mixer.music.load(options_path[cur_song])
+            pygame.mixer.music.play()
+        if clicked.get() == "Music3":
+            cur_song = 2
+            pygame.mixer.music.load(options_path[cur_song])
+            pygame.mixer.music.play()
+        if clicked.get()=='None':
+            pygame.mixer.music.stop()
+        import sleep_tracker
+        sleep_tracker.start_tracking()
 
-   
+    hour= StringVar()
+    hourBox=OptionMenu(att,hour,*[str(i) for i in range(24)])
+    hourBox.place(x=300,y=250)
+    min = StringVar()
+    minBox = OptionMenu(att, min, *[str(i) for i in range(60)])
+    minBox.place(x=350, y=250)
 
-                   
-  
-    
+    trackBtn = tk.Button(app, text="Start Tracking", font="BahnschriftLight 15", fg='black', bg="purple", bd=0,
+                         activebackground="green", activeforeground="white",command=sound_track).place(x=20, y=120)
+
+
 ActivityBtn = tk.Button(navapp,text = "Dashboard", font="BahnschriftLight 15 underline", bg="white", fg=color["purple"], activeforeground="green", bd=0,command = db_click).place(x=25, y=y)
 y += 60
 ActivityBtn = tk.Button(navapp,text = "Sleep Analytics", font="BahnschriftLight 15 underline", bg="white", fg=color["purple"], activeforeground="green", bd=0,command = Track_click).place(x=25, y=y)
