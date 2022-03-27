@@ -3,6 +3,7 @@ from tkinter import *
 from tkinter import messagebox
 from tkinter import ttk
 import sys
+import pygame
 sys.path.append("")
 app = Tk()
 
@@ -102,6 +103,7 @@ def db_click():
 
 
 def SA_click():
+
     # messagebox.showinfo("Sleep Analytics Popup")
     switch()
     removeAllTemporary(app)
@@ -164,6 +166,7 @@ def SA_click():
     #              values =("Suman", "F", "30"))
         
 
+
 def Track_click():
     switch()
     removeAllTemporary(app)
@@ -182,12 +185,51 @@ def Track_click():
         toggle_button.configure(command=off)
         # onoff.configure(text='On')
 
+
     toggle_photo = PhotoImage(file='on.png')
     toggle_button = Button(att,image=toggle_photo,border=0,command=off)
-    toggle_button.place(x=300,y=260)
+    toggle_button.place(x=450,y=260)
+
+    pygame.mixer.init()
+    options = ['Music1', 'Music2', 'Music3','None']
+    options_path = ['./GUI/Calm-and-Peaceful.mp3',
+                    './GUI/alex-productions-ambient-music-nature.mp3',
+                    './GUI/Sunset-Landscape.mp3','']
+    clicked = StringVar()
+    Drop_box = OptionMenu(att, clicked, *options)
+    Drop_box.place(x=350,y=100)
+    clicked.set("Music1")
 
 
-   
+    def sound_track():
+        global cur_song
+        if clicked.get() == "Music1":
+            cur_song = 0
+            pygame.mixer.music.load(options_path[cur_song])
+            pygame.mixer.music.play()
+        if clicked.get() == "Music2":
+            cur_song = 1
+            pygame.mixer.music.load(options_path[cur_song])
+            pygame.mixer.music.play()
+        if clicked.get() == "Music3":
+            cur_song = 2
+            pygame.mixer.music.load(options_path[cur_song])
+            pygame.mixer.music.play()
+        if clicked.get()=='None':
+            pygame.mixer.music.stop()
+        import sleep_tracker
+        sleep_tracker.start_tracking()
+
+    hour= StringVar()
+    hourBox=OptionMenu(att,hour,*[str(i) for i in range(24)])
+    hourBox.place(x=300,y=250)
+    min = StringVar()
+    minBox = OptionMenu(att, min, *[str(i) for i in range(60)])
+    minBox.place(x=350, y=250)
+
+    trackBtn = tk.Button(app, text="Start Tracking", font="BahnschriftLight 15", fg='black', bg="purple", bd=0,
+                         activebackground="green", activeforeground="white",command=sound_track).place(x=20, y=120)
+
 
    
 
