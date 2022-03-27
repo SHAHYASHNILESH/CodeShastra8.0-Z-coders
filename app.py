@@ -1,11 +1,18 @@
 import tkinter as tk
 from tkinter import *
 from tkinter import messagebox
-from tkinter import ttk
+
+import cv2
+import pandas as pd
+import seaborn as sns
+import numpy as np
 import sys
 import pygame
 sys.path.append("")
 app = Tk()
+from matplotlib.figure import Figure
+from matplotlib.backends.backend_tkagg import (FigureCanvasTkAgg,
+NavigationToolbar2Tk)
 
 is_on = True
 lv = []
@@ -80,8 +87,8 @@ homeLabel.pack(side="right")
 
 #Menu Click
 def menuClick():
-    removeAllTemporary(app)
     switch()
+    removeAllTemporary(app)
 # Navbar button:
 navbarBtn = tk.Button(topFrame, image=navIcon, bg=color["#663399"], activebackground=color["#663399"], bd=0, padx=20, command=menuClick)
 navbarBtn.place(x=10, y=10)
@@ -93,14 +100,56 @@ tk.Label(navapp, font="Bahnschrift 15", bg=color["#663399"], fg="white", height=
 
 # set y-coordinate of Navbar widgets:
 y = 80
-
+################################################################
 def db_click():
+    global img
     # messagebox.showinfo("Dashboard Popup")
-    switch()
     removeAllTemporary(app)
+    switch()
     dashBoardLabel = Label(app,text='DASHBOARD',bg="white",font = ('bold 15 underline')).place(x=240,y=60)
     lv.append(dashBoardLabel)
+    init_figure = create_figure()
+    canvas = FigureCanvasTkAgg(init_figure, master=app)
+    canvas.draw()
+    canvas.get_tk_widget().place(x=100,y=150)
+    from PIL import Image,ImageTk
+    img=cv2.imread('./temp.png')
+    scale_percent = 40  # percent of original size
+    width = int(img.shape[1] * scale_percent / 100)
+    height = int(img.shape[0] * scale_percent / 100)
+    dim = (width, height)
+    resized = cv2.resize(img, dim, interpolation=cv2.INTER_AREA)
+    img = ImageTk.PhotoImage(image=Image.fromarray(resized))
+    label=tk.Label(app,image=img)
+    label.place(x=300,y=150)
+# ##############################################
+def create_figure() -> Figure:
+    # generate some data
+    matrix = np.random.randint(20, size=(10, 10))
+    # plot the data
+    figure = Figure(figsize=(2, 2))
+    ax = figure.subplots()
+    df=pd.read_csv('./logs.csv')
+    sns.countplot(x="Position", data=df,ax=ax)
+    # sns.heatmap(matrix, square=True, cbar=False, ax=ax)
+    return figure
 
+
+# list of squares
+#     y = [i**2 for i in range(101)]
+#
+# # adding the subplot
+#     plot1 = fig.add_subplot(111)
+#
+# # plotting the graph
+#     plot1.plot(y)
+
+    # creating the Tkinter canvas# containing the Matplotlib figure
+    canvas = FigureCanvasTkAgg(fig,
+							master = app)
+    canvas.draw()
+    # placing the canvas on the Tkinter window
+    canvas.get_tk_widget().place(x=50,y=50)
 
 def SA_click():
 
@@ -142,7 +191,6 @@ def SA_click():
     treev.heading("3", text ="Perfect sleep(%)")
 
 def Track_click():
-    switch()
     removeAllTemporary(app)
     # import sleep_tracker
     trackBtn = tk.Button(app,text="Start Tracking", font="BahnschriftLight 15",fg='black',bg="#663399",bd=0,activebackground="green",activeforeground="white").place(x=20, y=120)
@@ -219,6 +267,9 @@ ActivityBtn = tk.Button(navapp,text = "Sleep Analytics", font="BahnschriftLight 
 y += 60
 TrackBtn = tk.Button(navapp,text = "Tracking", font="BahnschriftLight 15 underline", bg="white", fg=color["#663399"], activeforeground="green", bd=0,command = Track_click).place(x=25, y=y)
 y += 60
+# ActivityBtn = tk.Button(navapp,text = "Tracking", font="BahnschriftLight 15 underline", bg="white", fg=color["purple"], activeforeground="green", bd=0,command = db_click).place(x=25, y=y)
+# y += 60
+# Track_click()
 
 # Navbar Close Button:
 closeBtn = tk.Button(navapp,image=closeIcon, bg=color["#663399"], activebackground=color["#663399"], bd=0, command=switch)
