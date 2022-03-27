@@ -162,9 +162,11 @@ def SA_click():
     
     # Using treeview widget
     treev = ttk.Treeview(app, selectmode ='browse')
-    
+    import pandas as pd
+    df=pd.read_csv('Daily_logs.csv')
+    df.dropna(inplace=True)
     # Calling pack method w.r.to treeview
-    treev.place(x=80,y=80)
+    treev.place(x=90,y=80)
     
     # Constructing vertical scrollbar
     # with treeview
@@ -182,16 +184,25 @@ def SA_click():
     
     # Assigning the width and anchor to  the
     # respective columns
-    treev.column("1", width = 100, anchor ='c')
-    treev.column("2", width = 100, anchor ='c')
-    treev.column("3", width = 100, anchor ='c')
+    treev.column("1", width = 80, anchor ='c')
+    treev.column("2", width = 80, anchor ='c')
+    treev.column("3", width = 80, anchor ='c')
 
    
     # respective columns
     treev.heading("1", text ="Date")
     treev.heading("2", text ="Time of Sleep")
     treev.heading("3", text ="Perfect sleep(%)")
+    cols = list(df.columns)
+    treev["columns"] = cols
+    for i in cols:
+        treev.column(i,  width = 120,anchor="c")
+        treev.heading(i, text=i, anchor='c')
 
+    for index, row in df.iterrows():
+        treev.insert("",0,text=index,values=list(row))
+
+   
 def Track_click():
     switch()
     removeAllTemporary(app)
@@ -200,7 +211,7 @@ def Track_click():
     trackBtn = tk.Button(app,text="Start Tracking", font="BahnschriftLight 15",fg='black',bg="#663399",bd=0,activebackground="green",activeforeground="white").place(x=20, y=120)
     # dashBoardLabel.destroy()
     minutes=0
-    att = tk.Frame(app,bg='white',highlightbackground= "red",highlightcolor= "red",highlightthickness=2,height=300,width=350).place(x=200,y=80)
+    att = tk.Frame(app,bg='white',highlightbackground= "#663399",highlightcolor= "#663399",highlightthickness=2,height=300,width=350).place(x=200,y=80)
     playListLabel = tk.Label(att, text = "Sleep Playlist",bg='white',font = 'bold 14 underline').place(x=220,y=100)
     playListLabel = tk.Label(att, text = "Set Alarm",bg='white',font = 'bold 14 underline').place(x=220,y=220)
     def off():
@@ -215,7 +226,7 @@ def Track_click():
 
     toggle_photo = PhotoImage(file='on.png')
     toggle_button = Button(att,image=toggle_photo,border=0,command=off)
-    toggle_button.place(x=450,y=260)
+    toggle_button.place(x=400,y=260)
 
     pygame.mixer.init()
     options = ['Music1', 'Music2', 'Music3','None']
@@ -224,7 +235,7 @@ def Track_click():
                     './GUI/Sunset-Landscape.mp3','']
     clicked = StringVar()
     Drop_box = OptionMenu(att, clicked, *options)
-    Drop_box.place(x=350,y=100)
+    Drop_box.place(x=220,y=130)
     clicked.set("Music1")
 
 
@@ -249,10 +260,10 @@ def Track_click():
 
     hour= StringVar()
     hourBox=OptionMenu(att,hour,*[str(i) for i in range(24)])
-    hourBox.place(x=300,y=250)
+    hourBox.place(x=220,y=255)
     min = StringVar()
     minBox = OptionMenu(att, min, *[str(i) for i in range(60)])
-    minBox.place(x=350, y=250)
+    minBox.place(x=280, y=255)
 
     trackBtn = tk.Button(app, text="Start Tracking", font="BahnschriftLight 15", fg='black', bg="#663399", bd=0, activebackground="green", activeforeground="white",command=sound_track).place(x=20, y=120)
     StopBtn = tk.Button(app, text="Stop Tracking", font="BahnschriftLight 15", fg='black', bg="#663399", bd=0,activebackground="green", activeforeground="white").place(x=20, y=180)
