@@ -1,3 +1,4 @@
+import cv2
 import cv2.cv2 as cv2
 import mediapipe
 import numpy as np
@@ -11,7 +12,7 @@ logs=pd.DataFrame(index=['Time','Position'])
 def start_tracking():
     global  logs
 
-    cap = cv2.VideoCapture('./test.mp4')
+    cap = cv2.VideoCapture(0)
     temp=None
     z=0
     pose=mp_pose.Pose(min_detection_confidence=0.75,min_tracking_confidence=0.75,model_complexity=0)
@@ -49,9 +50,9 @@ def start_tracking():
         mmy=int(max([results.pose_landmarks.landmark[i].y for i in mp_pose.PoseLandmark])*image_height)
         image=cv2.rectangle(image,(mx,my),(mmx,mmy),(0,225,255),2)
 
-        image=cv2.circle(image,(int(nx),int(ny)),5,(255,0,0),5)
-        image=cv2.circle(image,(int(srx),int(sry)),5,(0,255,0),5)
-        image=cv2.circle(image,(int(slx),int(sly)),5,(0,255,0),5)
+        # image=cv2.circle(image,(int(nx),int(ny)),5,(255,0,0),5)
+        # image=cv2.circle(image,(int(srx),int(sry)),5,(0,255,0),5)
+        # image=cv2.circle(image,(int(slx),int(sly)),5,(0,255,0),5)
         # Draw the pose annotation on the image.
         image.flags.writeable = True
         image = cv2.cvtColor(image, cv2.COLOR_RGB2BGR)
@@ -100,10 +101,10 @@ def start_tracking():
 
 
         cv2.imshow('MediaPipe Pose', cv2.flip(image, 1))
-        cv2.imshow('MediaPipe img', cv2.flip(t, 1))
+        # cv2.imshow('MediaPipe img', cv2.flip(t, 1))
         cv2.imshow('MediaPipe temp', cv2.flip(np.array(temp,dtype=np.uint8), 1))
         if cv2.waitKey(100) & 0xFF == 27:
-
+            cv2.destroyAllWindows()
             break
     # print(logs)
     logs.dropna(inplace=True)

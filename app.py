@@ -264,9 +264,13 @@ def Track_click():
     min = StringVar()
     minBox = OptionMenu(att, min, *[str(i) for i in range(60)])
     minBox.place(x=280, y=255)
-
+    def stop_fun():
+        pygame.mixer.music.stop()
+        cv2.destroyAllWindows()
     trackBtn = tk.Button(app, text="Start Tracking", font="BahnschriftLight 15", fg='black', bg="#663399", bd=0, activebackground="green", activeforeground="white",command=sound_track).place(x=20, y=120)
-    StopBtn = tk.Button(app, text="Stop Tracking", font="BahnschriftLight 15", fg='black', bg="#663399", bd=0,activebackground="green", activeforeground="white").place(x=20, y=180)
+    StopBtn = tk.Button(app, text="Stop Tracking", font="BahnschriftLight 15", fg='black', bg="#663399", bd=0,activebackground="green", activeforeground="white",command=stop_fun).place(x=20, y=180)
+
+
 
     
 DashboardBtn = tk.Button(navapp,text = "Today's Activity", font="BahnschriftLight 15 underline", bg="white", fg=color["#663399"], activeforeground="green", bd=0,command = db_click).place(x=25, y=y)
