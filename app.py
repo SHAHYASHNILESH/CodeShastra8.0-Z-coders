@@ -13,14 +13,12 @@ import pygame
 sys.path.append("")
 app = Tk()
 from matplotlib.figure import Figure
-from matplotlib.backends.backend_tkagg import (FigureCanvasTkAgg,
-NavigationToolbar2Tk)
+from matplotlib.backends.backend_tkagg import (FigureCanvasTkAgg,NavigationToolbar2Tk)
 
 is_on = True
 lv = []
 def removeAllTemporary(applet):
-    for i in applet.place_slaves()[0:-1]:
-        i.place_forget()
+    for i in applet.place_slaves()[0:-1]:i.place_forget()
         print(i)
     print(applet.place_slaves())
     lv.clear()
@@ -30,7 +28,8 @@ app.geometry('616x411')
 
 
 # dictionary of colors:
-color = {"nero": "#FFFFFF", "#663399": "#663399", "darkorange": "#FE6101"}
+# color = {"nero": "#FFFFFF", "#663399": "#663399", "darkorange": "#FE6101"}
+color = {"nero": "#05f55d", "#663399": "#663399", "darkorange": "#FE6101"}
 
 
 
@@ -170,9 +169,7 @@ def SA_click():
     
     # Constructing vertical scrollbar
     # with treeview
-    verscrlbar = ttk.Scrollbar(app,
-                               orient ="vertical",
-                               command = treev.yview)
+    verscrlbar = ttk.Scrollbar(app,orient ="vertical",command = treev.yview)
     
    
     
